@@ -23,15 +23,13 @@ jobs:
         run: |
           for f in ./*.vcf; do
             echo "$(sed -n '/PHOTO/q;p' $f)" > $f
-            echo "END:VCARD" >> $f.vcf
+            echo "END:VCARD" >> $f
           done
           
       - name: Generate QR-Codes
         run: |
           sudo apt-get install qrencode -y
           for f in ./*.vcf; do
-            echo "$(sed -n '/PHOTO/q;p' $f)" > $f
-            echo "END:VCARD" >> $f
             vcard=$(<$f)
             qrencode -o $f.png "$vcard" 
           done
@@ -41,4 +39,5 @@ jobs:
           name: qr-codes
           path: |
             *.png
-
+            ! vcf-link.png 
+            
