@@ -1,0 +1,43 @@
+name: create vcard QR-Code
+
+on:
+  push:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Create VCards
+        run: |
+          for f in ./*.txt; do
+            cat $f | base64 -d >> $f.vcf
+          done
+      
+      - name: Cut Photos out
+        run: |
+          for f in ./*.vcf; do
+            echo "$(sed -n '/PHOTO/q;p' $f)" > $f
+            echo "END:VCARD" >> $f.vcf
+          done
+          
+      - name: Generate QR-Codes
+        run: |
+          apt-get install qrencode -y
+          for f in ./*.vcf; do
+            echo "$(sed -n '/PHOTO/q;p' $f)" > $f
+            echo "END:VCARD" >> $f.vcf
+            qrencode -o $f.png $(<$f)  
+          done
+      
+      - uses: actions/upload-artifact@v3
+        with:
+          name: my-artifact
+          path: |
+            !path/*.png
+
