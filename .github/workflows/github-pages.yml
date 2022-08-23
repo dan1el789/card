@@ -1,4 +1,4 @@
-name: create vcard QR-Code
+name: create vcard QR-Code and publish pages
 
 on:
   push:
@@ -34,10 +34,17 @@ jobs:
             qrencode -o $f.png "$vcard" 
           done
       
-      - uses: actions/upload-artifact@v3
+      - name: create artifact folder
+        run: |
+          mkdir output
+          cp *.png output/
+          cp *.js output/
+          cp *.html output/
+          cp *.txt output/
+            
+      - uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.ref == 'refs/heads/main' }}
         with:
-          name: qr-codes
-          path: |
-            *.png
-            ! vcf-link.png 
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./output
             
