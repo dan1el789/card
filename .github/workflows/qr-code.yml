@@ -28,7 +28,7 @@ jobs:
           
       - name: Generate QR-Codes
         run: |
-          apt-get install qrencode -y
+          sudo apt-get install qrencode -y
           for f in ./*.vcf; do
             echo "$(sed -n '/PHOTO/q;p' $f)" > $f
             echo "END:VCARD" >> $f.vcf
