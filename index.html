@@ -4,10 +4,14 @@
       <title>
             Daniel Ullrich
       </title>
+      <link rel="icon" href="https://pixabay.com/get/g295aaf523b5b1ed4b09bbf7e30f9e1e77bb1a832e162e5ba1955fe2ce2d14e4e521bda3180c2132f93df1302a0dff107a2150d58e42a4f63467495729807ed039b54da9ff56651330c5c4313b8f3e51c_640.png">
       <script src="vcard.js"></script>
       <script>
             document.addEventListener("DOMContentLoaded", function(event) { 
-                downloadMyVCard()
+                  let url = new URL(document.baseURI)
+                  let params = new URLSearchParams(url.search);
+                  let version = params.get('version')
+                  downloadMyVCard(version)
             });
       </script>
 </head>
