@@ -31,7 +31,8 @@ jobs:
           sudo apt-get install qrencode -y
           for f in ./*.vcf; do
             echo "$(sed -n '/PHOTO/q;p' $f)" > $f
-            echo "END:VCARD" >> $f.vcf
+            echo "END:VCARD" >> $f
+            cat $f
             qrencode -o $f.png $(<$f)  
           done
       
