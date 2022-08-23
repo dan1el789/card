@@ -7,7 +7,7 @@ function saveAsFile(filename, dataType, textInput) {
 }
 async function downloadMyVCard(version){
   if(version == null)
-    version = "vcard-everything"
+    version = "vcard-with-photo.txt"
   let request = await fetch("https://dan1el789.github.io/vcard/" + version) 
   let encodedText = await request.text()
   saveAsFile("daniel.vcf", "text/x-vcard", atob(encodedText))
