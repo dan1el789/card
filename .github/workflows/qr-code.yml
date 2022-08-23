@@ -32,8 +32,8 @@ jobs:
           for f in ./*.vcf; do
             echo "$(sed -n '/PHOTO/q;p' $f)" > $f
             echo "END:VCARD" >> $f
-            cat $f
-            qrencode -o $f.png $(<$f)  
+            vcard=$(<$f)
+            qrencode -o $f.png "$vcard" 
           done
       
       - uses: actions/upload-artifact@v3
