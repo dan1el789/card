@@ -37,7 +37,7 @@ jobs:
       
       - uses: actions/upload-artifact@v3
         with:
-          name: my-artifact
+          name: qr-codes
           path: |
-            !path/*.png
+            *.png
 
