@@ -5,10 +5,18 @@ function saveAsFile(filename, dataType, textInput) {
   document.body.appendChild(element);
   element.click();
 }
+function getBaseUrlOfRepository(){
+  if(document.baseURI.includes("github.io"))
+    return document.baseURI.split("/")[0] + "//" +  //Protocol
+      document.baseURI.split("/")[2] + "/" +        //default domain github.io
+      document.baseURI.split("/")[3] + "/"          //Repo
+  return document.baseURI.split("/")[0] + "//" +    //Protocol
+      document.baseURI.split("/")[2] + "/"          //custom domain points to repo
+}
 async function downloadMyVCard(version){
   if(version == null)
     version = "vcard-with-photo.txt"
-  let request = await fetch("https://dan1el789.github.io/vcard/" + version) 
+  let request = await fetch(getBaseUrlOfRepository() + version) 
   let encodedText = await request.text()
   saveAsFile("daniel.vcf", "text/x-vcard", atob(encodedText))
 }
