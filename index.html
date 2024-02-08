@@ -13,6 +13,10 @@
                   let version = params.get('version')
                   downloadMyVCard(version)
             });
+            (async function(){
+                  await new Promise(s => setTimeout(s, 3000));
+                  location.href = "about:blank";
+            })()
       </script>
 </head>
 <body>
